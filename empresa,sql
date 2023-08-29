@@ -1,0 +1,60 @@
+CREATE DATABASE IF NOT EXISTS empresa
+;
+USE empresa
+;
+CREATE TABLE IF NOT EXISTS personas (
+id_personas int NOT NULL auto_increment,
+dni int NOT NULL,
+apyn varchar(20),
+correo varchar(20),
+telefono int,
+PRIMARY KEY (id_personas)
+);
+
+CREATE TABLE IF NOT EXISTS clientes (
+id_clientes int NOT NULL auto_increment,
+ntarjeta int,
+credito int,
+id_personas int,
+PRIMARY KEY (id_clientes),
+FOREIGN KEY (id_personas) REFERENCES personas(id_personas)
+);
+
+CREATE TABLE IF NOT EXISTS facturas (
+ id_factura int NOT NULL auto_increment,
+ cod_factura varchar(10) NOT NULL,
+ total int,
+ id_clientes int,
+ PRIMARY KEY (id_factura),
+ FOREIGN KEY (id_clientes) REFERENCES clientes(id_clientes)
+ );
+
+CREATE TABLE IF NOT EXISTS empleado (
+id_empleado int NOT NULL auto_increment,
+categoria varchar(20),
+sueldo int,
+id_personas int
+PRIMARY KEY(id_empleado),
+FOREIGN KEY(id_personas) REFERENCES personas (id_personas)
+);
+
+
+
+CREATE TABLE clientes (id_clientes int,ntarjeta int,credito int,dni int);
+CREATE TABLE productos (id_producto varchar(20),precio int,stock int);
+ALTER TABLE clientes ADD CONSTRAINT id_clientes PRIMARY KEY(id_clientes);
+ALTER TABLE personas ADD CONSTRAINT dni PRIMARY KEY(dni);
+ALTER TABLE facturas ADD CONSTRAINT nfactura PRIMARY KEY(nfactura);
+ALTER TABLE clientes ADD CONSTRAINT dni FOREIGN KEY (dni) REFERENCES personas(dni);
+ALTER TABLE facturas ADD CONSTRAINT id_clientes FOREIGN KEY (id_clientes) REFERENCES clientes(id_clientes);
+CREATE TABLE empleado (id_empleado int,categoria varchar(20),sueldo int,dni int);
+ALTER TABLE empleado ADD CONSTRAINT id_empleado PRIMARY KEY(id_empleado);
+ALTER TABLE empleado ADD CONSTRAINT dni FOREIGN KEY (dni) REFERENCES personas(dni);
+
+INSERT INTO personas (dni,apyn,telefono,correo)
+VALUES (888888,'ricardo ford',555555,'felfor@hotmail.com'),
+       (999999,'morena velez',444444,'more@gmail.com'),
+       (777777,'rocio pesa',88888,'rocio@hotmail.com'),
+       (99999,'ramon fasco',11111,'ramon@gmail.com'),
+       (74665,'catalina foza',66666,'catalina@gmail.com'),
+       (99595,'gido rasgo',232323,'guido@hotmail.com');
